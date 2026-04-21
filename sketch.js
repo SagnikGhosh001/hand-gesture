@@ -7,11 +7,6 @@ let isProcessing = false;
 
 const MAX_STROKES = 5000;
 
-const MODES = {
-  DRAW: "draw",
-  ERASE: "erase",
-};
-
 const GESTURES = {
   DRAW: "draw",
   ERASE: "erase",
@@ -74,35 +69,28 @@ const isEraseGesture = (hand) => {
   );
 };
 
-const isOpenPalm = (hand) => {
-  return (
-    hand[8].y < hand[6].y &&
-    hand[12].y < hand[10].y &&
-    hand[16].y < hand[14].y &&
-    hand[20].y < hand[18].y &&
-    hand[4].x > hand[3].x
-  );
-};
+const isOpenPalm = (hand) =>
+  hand[8].y < hand[6].y &&
+  hand[12].y < hand[10].y &&
+  hand[16].y < hand[14].y &&
+  hand[20].y < hand[18].y &&
+  hand[4].x > hand[3].x
 
-const isFist = (hand) => {
-  return (
-    hand[8].y > hand[6].y &&
-    hand[12].y > hand[10].y &&
-    hand[16].y > hand[14].y &&
-    hand[20].y > hand[18].y &&
-    hand[4].x < hand[2].x &&
-    !isPinch(hand)
-  );
-};
+const isFist = (hand) =>
+  hand[8].y > hand[6].y &&
+  hand[12].y > hand[10].y &&
+  hand[16].y > hand[14].y &&
+  hand[20].y > hand[18].y &&
+  hand[4].x < hand[2].x &&
+  !isPinch(hand)
 
-const isPointing = (hand) => {
-  return (
-    hand[8].y < hand[6].y &&
-    hand[12].y > hand[10].y &&
-    hand[16].y > hand[14].y &&
-    hand[20].y > hand[18].y
-  );
-};
+
+const isPointing = (hand) =>
+  hand[8].y < hand[6].y &&
+  hand[12].y > hand[10].y &&
+  hand[16].y > hand[14].y &&
+  hand[20].y > hand[18].y
+
 
 const getGesture = () => {
   if (!landmarks.length) return GESTURES.NONE;
@@ -135,7 +123,6 @@ const updateDrawing = () => {
 
     if (d < threshold) {
       strokes.push({ x: tx, y: ty });
-
 
       if (strokes.length > MAX_STROKES) {
         strokes.splice(0, strokes.length - MAX_STROKES);
